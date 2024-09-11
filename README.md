@@ -1,96 +1,51 @@
-# simple-zk
+# Zero-Knowledge Proof Multiplier on Solana
 
-This project is generated with the [create-solana-dapp](https://github.com/solana-developers/create-solana-dapp) generator.
+This project implements a simple zero-knowledge proof system on Solana to verify multiplications without revealing the input factors. It demonstrates the basics of building and verifying zk-SNARKs on Solana.
 
-## Getting Started
+## Project Overview
 
-### Prerequisites
+- Implements a basic ZKP circuit for multiplication using Circom
+- Generates proving/verification keys using Powers of Tau ceremony  
+- Compiles the circuit and exports a Solana verifier contract
+- Creates tests to generate proofs and verify them on Solana
 
-- Node v18.18.0 or higher
+## Key Components
 
-- Rust v1.77.2 or higher
-- Anchor CLI 0.30.1 or higher
-- Solana CLI 1.18.17 or higher
+1. Circom Circuit
+   - Defines a `Multiplier` circuit that takes private inputs `a` and `b` and outputs their product `c`
 
-### Installation
+2. Trusted Setup
+   - Uses Powers of Tau to generate the initial parameters
+   - Creates the circuit-specific zkey
 
-#### Clone the repo
+3. Solana Verifier Contract  
+   - Exports verification key and pairing functions to Rust
+   - Implements the Groth16 verification algorithm
 
-```shell
-git clone <repo-url>
-cd <repo-name>
-```
+4. Tests
+   - Generates a valid proof using snarkjs
+   - Formats proof data for the Solana program
+   - Verifies the proof on-chain
 
-#### Install Dependencies
+## Development Process
 
-```shell
-npm install
-```
+1. Set up project structure and dependencies
+2. Write Circom circuit 
+3. Perform trusted setup and circuit compilation
+4. Export Solana verifier contract
+5. Implement proof generation and verification tests
+6. Deploy and test on Solana testnet (when v1.17 is available)
 
-#### Start the web app
+## Key Learnings
 
-```
-npm run dev
-```
+- Basics of zero-knowledge proofs and zk-SNARKs
+- Circom circuit development
+- Cryptographic ceremony processes (Powers of Tau)
+- Integrating ZKP systems with Solana programs
+- Formatting and verifying Groth16 proofs on-chain
 
-## Apps
+## Next Steps
 
-### anchor
-
-This is a Solana program written in Rust using the Anchor framework.
-
-#### Commands
-
-You can use any normal anchor commands. Either move to the `anchor` directory and run the `anchor` command or prefix the command with `npm run`, eg: `npm run anchor`.
-
-#### Sync the program id:
-
-Running this command will create a new keypair in the `anchor/target/deploy` directory and save the address to the Anchor config file and update the `declare_id!` macro in the `./src/lib.rs` file of the program.
-
-You will manually need to update the constant in `anchor/lib/counter-exports.ts` to match the new program id.
-
-```shell
-npm run anchor keys sync
-```
-
-#### Build the program:
-
-```shell
-npm run anchor-build
-```
-
-#### Start the test validator with the program deployed:
-
-```shell
-npm run anchor-localnet
-```
-
-#### Run the tests
-
-```shell
-npm run anchor-test
-```
-
-#### Deploy to Devnet
-
-```shell
-npm run anchor deploy --provider.cluster devnet
-```
-
-### web
-
-This is a React app that uses the Anchor generated client to interact with the Solana program.
-
-#### Commands
-
-Start the web app
-
-```shell
-npm run dev
-```
-
-Build the web app
-
-```shell
-npm run build
-```
+- Extend circuit for more complex computations
+- Optimize for reduced proof size/verification time
+- Explore applications like private voting, auctions, identity systems
